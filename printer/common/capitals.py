@@ -72,7 +72,7 @@ def F():
             (1, 1.5, 0),
             (1, -1.5, 0),
             (1, 0, 1.5),
-            (0, -3, 0))
+            (0, 0, -3))
     return data
 
 
@@ -126,7 +126,7 @@ def K():
     data = ((1, 0, 3),
             (0, 1.5, 0),
             (1, -1.5, -1.5),
-            (1, 1.5, 1.5),
+            (1, 1.5, -1.5),
             (0, -1.5, 0))
     return data
 
@@ -232,7 +232,7 @@ def U():
     data = ((1, 0, 3),
             (1, 3, 0),
             (1, 0, -3),
-            (0, 3, 0))
+            (0, -3, 0))
     return data
 
 
@@ -273,37 +273,37 @@ def Z():
     data = ((1, 3, 0),
             (1, -3, 3),
             (1, 3, 0),
-            (0, 3, 3))
+            (0, -3, -3))
     return data
 
 
 capitals = {
-    "A": A(),
-    "B": B(),
-    "C": C(),
-    "D": D(),
-    "E": E(),
-    "F": F(),
-    "G": G(),
-    "H": H(),
-    "I": I(),
-    "J": J(),
-    "K": K(),
-    "L": L(),
-    "M": M(),
-    "N": N(),
-    "O": O(),
-    "P": P(),
-    "Q": Q(),
-    "R": R(),
-    "S": S(),
-    "T": T(),
-    "U": U(),
-    "V": V(),
-    "W": W(),
-    "X": X(),
-    "Y": Y(),
-    "Z": Z()
+    "A": A,
+    "B": B,
+    "C": C,
+    "D": D,
+    "E": E,
+    "F": F,
+    "G": G,
+    "H": H,
+    "I": I,
+    "J": J,
+    "K": K,
+    "L": L,
+    "M": M,
+    "N": N,
+    "O": O,
+    "P": P,
+    "Q": Q,
+    "R": R,
+    "S": S,
+    "T": T,
+    "U": U,
+    "V": V,
+    "W": W,
+    "X": X,
+    "Y": Y,
+    "Z": Z
 }
 
 def verify():
@@ -313,9 +313,9 @@ def verify():
         xdis = 0
         ydis = 0
         for linexy in data:
-            xdis = xdis + linexy[2]
-            ydis = ydis + linexy[3]
-        if xdis == 0 && ydis == 0:
+            xdis = xdis + linexy[1]
+            ydis = ydis + linexy[2]
+        if xdis == 0 and ydis == 0:
             print("{} data is OK".format(cap))
         else:
             print("{} data is not OK".format(cap))
