@@ -9,8 +9,8 @@ from common.capitals import *
 class boostprinter(object):
     PEN_DOWN_UP_TIME = 1.5
     PEN_DOWN_UP_SPEED = 1.0
-    X_BASE_ANGLE = 360
-    Y_BASE_ANGLE = 180
+    X_BASE_TIMED = 1
+    Y_BASE_TIMED = 2
     BASE_SPEED = 0.1
 
     def __init__(self):
@@ -36,25 +36,30 @@ class boostprinter(object):
         else:
             pass
 
+        direction_x = line_xy[1] / abs(line_xy[1])
+        direction_y = line_xy[2] / abs(line_xy[2])
         if line_xy[1] == 0 && line_xy[2] == 0:
             pass
         elif line_xy[1] != 0 && line_xy[2] == 0:
-            angle_x = line_xy[1] * self.X_BASE_ANGLE / 3
-            self.hub.motor_A.angled(angle_x, self.BASE_SPEED)
+            time_x = line_xy[1] * self.X_BASE_TIMED / 3
+            self.hub.motor_A.timed(time_x, self.BASE_SPEED * direction_x)
         elif line_xy[1] == 0 && line_xy[2] != 0:
-            angle_y = line_xy[2] * self.Y_BASE_ANGLE / 3
-            self.hub.motor_A.angled(angle_y, self.BASE_SPEED)
+            time_y = line_xy[2] * self.Y_BASE_TIMED / 3
+            self.hub.motor_A.timed(time_y, self.BASE_SPEED * direction_y)
         else:
-            direction_x = line_xy[1] / abs(line_xy[1])
-            direction_y = line_xy[2] / abs(line_xy[2])
             ratio = 1
+            speed_x = self.BASE_SPEED
+            speed_y = self.BASE_SPEED
+            time_xy = 0
             if abs(line_xy[1]) > abs(line_xy[2]):
-                radio = abs(line_xy[1]) / abs(line_xy[2])
+                ratio = abs(line_xy[1]) / abs(line_xy[2])
                 speed_x = self.BASE_SPEED * ratio
+                time_xy = line_xy[2] * self.Y_BASE_TIMED / 3
             else:
-                radio = abs(line_xy[2]) / abs(line_xy[1])
-
-
+                ratio = abs(line_xy[2]) / abs(line_xy[1])
+                speed_y = self.BASE_SPEED * ratio
+                time_xy = line_xy[1] * self.X_BASE_TIMED / 3
+            self.hub.motor_AB.timed(time_xy, speed_x, speed_y)
 
 
     def print_cap(self, cap):
