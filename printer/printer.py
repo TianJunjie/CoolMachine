@@ -4,7 +4,7 @@ from pylgbst.hub import MoveHub
 from pylgbst.peripherals import EncodedMotor
 from common.resetablemovehub import ResetableMoveHub
 from common.capitals import *
-
+import argparse
 
 class boostprinter(object):
     PEN_DOWN_UP_TIME = 1.5
@@ -88,16 +88,18 @@ class boostprinter(object):
         self.hub.motor_B.angled(180, -0.1)
 
 
-if __name__ == '__main__':
-    printer = boostprinter()
-    printer.down_pen()
+arg_parser = argparse.ArgumentParser()
+arg_parser.add_argument('--strprint', '-s', help='string for print')
+args = arg_parser.parse_args()
 
-    for i in range(0, 5):
-        printer.test_x_move()
-        printer.test_y_move()
-        printer.test_x_move_back()
-        printer.test_y_move_back()
-        printer.up_pen()
-        printer.test_x_move()
-        printer.down_pen()
-    printer.up_pen()
+if __name__ == '__main__':
+    string_print = ""
+    if args.strprint is not None:
+        if args.strprint != "":
+            string_print = args.strprint
+            string_print.upper()
+
+    if string_print != "":
+        printer = boostprinter()
+        for cap in string_print:
+            printer.print_cap(cap)

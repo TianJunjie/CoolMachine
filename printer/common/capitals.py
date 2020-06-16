@@ -1,9 +1,10 @@
 # capital data
-
+import string
 # data ((0/1, X, Y), ....)
 # 0 -> pen up, 1 -> pen down
 # X -> x distance move
 # Y -> y distance move
+
 
 
 def A():
@@ -17,7 +18,18 @@ def A():
 
 
 def B():
-    pass
+    data = ((1, 1, 0),
+            (1, 0.5, 0.5),
+            (1, 0, 0.5),
+            (1, -0.5, 0.5),
+            (1, -1, 0),
+            (1, 1, 0),
+            (1, 0.5, 0.5),
+            (1, 0, 0.5),
+            (1, -0.5, 0.5),
+            (1, -1, 0),
+            (1, 0, -3))
+    return data
 
 
 def C():
@@ -32,7 +44,13 @@ def C():
 
 
 def D():
-    pass
+    data = ((1, 1.5, 0),
+            (1, 1, 1),
+            (1, 0, 1),
+            (1, -1, 1),
+            (1, -1.5, 0),
+            (1, 0, -3))
+    return data
 
 
 def E():
@@ -59,7 +77,17 @@ def F():
 
 
 def G():
-    pass
+    data = ((0, 3, 1),
+            (1, -1, -1),
+            (1, -1, 0),
+            (1, -1, 1),
+            (1, 0, 1),
+            (1, 1, 1),
+            (1, 0.25, 0),
+            (1, 0, -1.5),
+            (1, -0.25, 0),
+            (0, -1, -1.5))
+    return data
 
 
 def H():
@@ -129,21 +157,67 @@ def N():
     return data
 
 
-
 def O():
-    pass
+    data = ((0, 1, 0),
+            (1, 1, 0),
+            (1, 1, 1),
+            (1, 0, 1),
+            (1, -1, 1),
+            (1, -1, 0),
+            (1, -1, -1),
+            (1, 0, -1),
+            (1, 1, -1),
+            (0, -1, 0))
+    return data
 
 
 def P():
-    pass
+    data = ((0, 0, 3),
+            (1, 0, -3),
+            (1, 1.5, 0),
+            (1, 0, 1.5),
+            (1, -1.5, 0),
+            (1, 0, -1.5))
+    return data
 
 
 def Q():
-    pass
+    data = ((0, 1, 0),
+            (1, 1, 0),
+            (1, 1, 1),
+            (1, 0, 1),
+            (1, -1, 1),
+            (1, -1, 0),
+            (1, -1, -1),
+            (1, 0, -1),
+            (1, 1, -1),
+            (0, -1, 0),
+            (0, 3, 3),
+            (1, -1, -1),
+            (0, -2, -2))
+    return data
 
 
 def R():
-    pass
+    data = ((0, 0, 3),
+            (1, 0, -3),
+            (1, 1.5, 0),
+            (1, 0, 1.5),
+            (1, -1.5, 0),
+            (1, 1.5, 1.5),
+            (0, -1.5, -3))
+    return data
+
+
+def S():
+    data = ((0, 1.5, 0),
+            (1, -1.5, 0),
+            (1, 0, 1.5),
+            (1, 1.5, 0),
+            (1, 0, 1.5),
+            (1, -1.5, 0),
+            (0, 0, -3))
+    return data
 
 
 def T():
@@ -231,6 +305,20 @@ capitals = {
     "Y": Y(),
     "Z": Z()
 }
+
+def verify():
+    caps = string.ascii_uppercase
+    for cap in caps:
+        data = capitals[cap]()
+        xdis = 0
+        ydis = 0
+        for linexy in data:
+            xdis = xdis + linexy[2]
+            ydis = ydis + linexy[3]
+        if xdis == 0 && ydis == 0:
+            print("{} data is OK".format(cap))
+        else:
+            print("{} data is not OK".format(cap))
 
 
 
