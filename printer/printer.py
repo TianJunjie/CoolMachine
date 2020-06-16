@@ -3,11 +3,15 @@ from pylgbst.comms.cpygatt import GattoolConnection
 from pylgbst.hub import MoveHub
 from pylgbst.peripherals import EncodedMotor
 from common.resetablemovehub import ResetableMoveHub
+from common.capitals import *
 
 
 class boostprinter(object):
     PEN_DOWN_UP_TIME = 1.5
     PEN_DOWN_UP_SPEED = 1.0
+    X_BASE_ANGLE = 360
+    Y_BASE_ANGLE = 180
+    BASE_SPEED = 0.1
 
     def __init__(self):
         conn = GattoolConnection()
@@ -24,8 +28,40 @@ class boostprinter(object):
         if pen_motor is not None:
             pen_motor.timed(self.PEN_DOWN_UP_TIME, -self.PEN_DOWN_UP_SPEED)
 
-    def line(self):
-        pass
+    def line(self, line_xy):
+        if line_xy[0] == 1:
+            self.down_pen()
+        elif line_xy[0] == 0:
+            self.up_pen()
+        else:
+            pass
+
+        if line_xy[1] == 0 && line_xy[2] == 0:
+            pass
+        elif line_xy[1] != 0 && line_xy[2] == 0:
+            angle_x = line_xy[1] * self.X_BASE_ANGLE / 3
+            self.hub.motor_A.angled(angle_x, self.BASE_SPEED)
+        elif line_xy[1] == 0 && line_xy[2] != 0:
+            angle_y = line_xy[2] * self.Y_BASE_ANGLE / 3
+            self.hub.motor_A.angled(angle_y, self.BASE_SPEED)
+        else:
+            direction_x = line_xy[1] / abs(line_xy[1])
+            direction_y = line_xy[2] / abs(line_xy[2])
+            ratio = 1
+            if abs(line_xy[1]) > abs(line_xy[2]):
+                radio = abs(line_xy[1]) / abs(line_xy[2])
+                speed_x = self.BASE_SPEED * ratio
+            else:
+                radio = abs(line_xy[2]) / abs(line_xy[1])
+
+
+
+
+    def print_cap(self, cap):
+        data = capitals[cap]()
+        if data is not None:
+            for lineXY in data:
+                line(lineXY)
 
     def _get_motor_for_pen(self):
         if isinstance(self.hub.port_C, EncodedMotor):
