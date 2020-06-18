@@ -140,7 +140,7 @@ class boostprinter(object):
                 if abs(lineXY[1]) > space:
                     space = abs(lineXY[1])
                 self.line_angle(lineXY)
-            self._space(space + 1)
+            self._space(space + 0.5)
 
 
     def _get_motor_for_pen(self):
