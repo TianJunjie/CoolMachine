@@ -2,4 +2,4 @@
 
 ## building blocks
 
-![f](./images/face.jpeg)
+![face](https://github.com/TianJunjie/CoolMachine/blob/master/printer/images/face.jpeg)
