@@ -101,14 +101,14 @@ class boostprinter(object):
             if line_xy[1] < 0:
                 direction_x = -1
             time_x = line_xy[1] * self.BASE_ANGLE
-            logger.error("line X time {} speed {}".format(abs(time_x), self.X_BASE_SPEED * direction_x))
+            logger.error("line X angle {} speed {}".format(abs(time_x), self.X_BASE_SPEED * direction_x))
             self.hub.motor_A.angled(abs(time_x), self.BASE_SPEED_ANGLE * direction_x)
         elif line_xy[1] == 0 and line_xy[2] != 0:
             direction_y = 1
             if line_xy[2] < 0:
                 direction_y = -1
             time_y = line_xy[2] * self.BASE_ANGLE
-            logger.error("line Y time {} speed {}".format(abs(time_y), self.Y_BASE_SPEED * direction_y))
+            logger.error("line Y angle {} speed {}".format(abs(time_y), self.Y_BASE_SPEED * direction_y))
             self.hub.motor_B.angled(abs(time_y), self.BASE_SPEED_ANGLE * direction_y)
         else:
             direction_x = 1
@@ -124,11 +124,12 @@ class boostprinter(object):
             speed_x = self.BASE_SPEED_ANGLE * direction_x
             speed_y = self.BASE_SPEED_ANGLE * direction_y
 
-            logger.error("line XY time {} speedx {} speedy {}".format(abs(time_xy), speed_x, speed_y))
+            logger.error("line XY angle {} speedx {} speedy {}".format(abs(time_xy), speed_x, speed_y))
             self.hub.motor_AB.angled(abs(time_xy), speed_x, speed_y)
 
 
     def print_cap(self, cap):
+        logger.error("print letter {}".format(cap))
         data = capitals[cap]()
         if data is not None:
             for lineXY in data:
@@ -193,12 +194,16 @@ if __name__ == '__main__':
     printer = boostprinter()
 
     try:
-        #printer.down_pen()
         printer.fresh_xy_angle()
-        #printer.fresh_xy()
-         #printer.test_xy_move_dif()
-         #printer.test_xy_move_back_dif()
-        printer.print_cap("F")
+        string_print = ""
+        if args.strprint is not None:
+            if args.strprint != "":
+                string_print = args.strprint
+                string_print.upper()
+
+        if string_print != "":
+            for cap in string_print:
+                printer.print_cap(cap)
     finally:
         printer.up_pen()
 
