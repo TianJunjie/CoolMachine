@@ -127,13 +127,21 @@ class boostprinter(object):
             logger.error("line XY angle {} speedx {} speedy {}".format(abs(time_xy), speed_x, speed_y))
             self.hub.motor_AB.angled(abs(time_xy), speed_x, speed_y)
 
+    def _space(self, space):
+        self.up_pen()
+        self.hub.motor_A.angled(space * self.BASE_ANGLE, self.BASE_SPEED_ANGLE)
 
     def print_cap(self, cap):
         logger.error("print letter {}".format(cap))
         data = capitals[cap]()
+        space = 1
         if data is not None:
             for lineXY in data:
+                if abs(lineXY[1]) > space:
+                    space = abs(lineXY[1])
                 self.line_angle(lineXY)
+            self._space(space + 1)
+
 
     def _get_motor_for_pen(self):
         if isinstance(self.hub.port_C, EncodedMotor):
@@ -202,25 +210,11 @@ if __name__ == '__main__':
                 string_print.upper()
 
         if string_print != "":
-            for cap in string_print:
+            caps_list = list(string_print)
+            caps_list.reverse()
+            for cap in caps_list:
                 printer.print_cap(cap)
     finally:
         printer.up_pen()
 
-
-
-
-'''
-
-    string_print = ""
-    if args.strprint is not None:
-        if args.strprint != "":
-            string_print = args.strprint
-            string_print.upper()
-
-    if string_print != "":
-        printer = boostprinter()
-        for cap in string_print:
-            printer.print_cap(cap)
-'''
 
