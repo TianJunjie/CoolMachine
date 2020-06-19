@@ -9,6 +9,7 @@ import logging
 
 logger = logging.getLogger("printer")
 
+
 class boostprinter(object):
     PEN_DOWN_UP_TIME = 1.5
     PEN_DOWN_UP_SPEED = 1.0
@@ -140,7 +141,7 @@ class boostprinter(object):
                 if abs(lineXY[1]) > space:
                     space = abs(lineXY[1])
                 self.line_angle(lineXY)
-            self._space(space + 0.5)
+        self._space(space + 0.5)
 
 
     def _get_motor_for_pen(self):
